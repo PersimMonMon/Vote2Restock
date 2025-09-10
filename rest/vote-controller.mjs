@@ -19,12 +19,11 @@ app.listen(PORT, async () => {
 // POST /votes to enfore users only voting once 
 app.post('/votes', asyncHandler(async (req, res) => {
     // get userId, itemId, userChoice
-    const {userId, itemId, userChoice} = req.body
-    const response = await votes.checkVotes(userId, itemId, userChoice);
+    const {userId, itemId} = req.body
+    const response = await votes.toggleVote(userId, itemId);
     res.status(201).json(response)
 }));
 
-// Define schema (highly recommend when using MongoDB)**
 
 
 

@@ -20,23 +20,15 @@ async function connect() {
 const voteSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     itemId: { type: String, required: true },
-    userChoice: { type: Number, required: true }
+    userChoice: { type: Number, required: 0 }
 })
 
 // Create model to create, read, update, and delete documents 
 const Vote = mongoose.model(VOTE_DB_NAME, voteSchema);
 
 // verify user only votes once 
-async function checkVote(userId, itemId, userChoice){
-    const vote = await Vote.findOne({ userId: userId, itemId: itemId, userChoice: userChoice})
-    
-    // if vote exist return it, else make new model 
-    if (vote){
-        return vote;
-    } else {
-        // create a new Vote model
-        const createVote = new Vote({userId, itemId, userChoice});
-        const saved = await createVote.save();
-        return saved;
-    };
-};
+async function toggleVote(userId, itemId) {
+    const vote = Vote.findOne({userId, itemId})
+    vote.userChoice = vote.userChoice === 1 ? 0 : 1;
+    return await vote.save();
+}
