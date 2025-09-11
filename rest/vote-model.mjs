@@ -39,7 +39,6 @@ async function getVotes(itemId) {
     return voteCount;
 };
 
-
 // toggle the vote (put request)
 async function toggleVote(userId, itemId) {
     const vote = await Vote.findOne({userId, itemId})
