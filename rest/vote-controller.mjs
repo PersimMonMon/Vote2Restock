@@ -16,12 +16,11 @@ app.listen(PORT, async () => {
     console.log(`Server listening on port ${PORT}...`);
 });
 
-// POST /votes to enfore users only voting once 
-app.post('/votes', asyncHandler(async (req, res) => {
-    // get userId, itemId, userChoice
-    const {userId, itemId} = req.body
-    const response = await votes.toggleVote(userId, itemId);
-    res.status(201).json(response)
+// get request 
+app.get('/votes', asyncHandler (async (req, res) => {
+    const { itemId } = req.query
+    const voteObjects = await votes.getVotes(itemId)
+    res.status(200).json(voteObjects);
 }));
 
 

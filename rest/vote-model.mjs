@@ -20,15 +20,29 @@ async function connect() {
 const voteSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     itemId: { type: String, required: true },
-    userChoice: { type: Number, required: 0 }
+    userChoice: { type: Number, default: 0 }
 })
 
 // Create model to create, read, update, and delete documents 
 const Vote = mongoose.model(VOTE_DB_NAME, voteSchema);
 
-// verify user only votes once 
+// 
+async function getVotes(itemId) {
+    const voteCount = await Vote.aggregate([
+        { $match: { itemId: itemId}},       // filter to only have itemId
+        { $group: { 
+            _id: "$itemId", 
+            totalVotes: { $sum: "$userChoice"} 
+            } 
+        }  
+    ]);
+    return voteCount;
+};
+
+
+// toggle the vote (put request)
 async function toggleVote(userId, itemId) {
-    const vote = Vote.findOne({userId, itemId})
+    const vote = await Vote.findOne({userId, itemId})
     vote.userChoice = vote.userChoice === 1 ? 0 : 1;
     return await vote.save();
-}
+};
