@@ -23,12 +23,11 @@ app.get('/votes', asyncHandler (async (req, res) => {
     res.status(200).json(voteObjects);
 }));
 
+// put request 
+app.put('/toggle', asyncHandler (async (req, res) => {
+    const { userId, itemId } = req.body;
+    const item = await votes.toggleVote(userId, itemId)
+    res.status(200).json(item);
+}));
 
 
-
-
-
-// Determine what data items will store (the properties)
-
-
-// define the CRUD 
