@@ -14,10 +14,10 @@ function App() {
       
       <div className="container">
         <div className="main-section">
-          <p>hello</p>
+          <div class="products-container"></div>
         </div>
         <div className="side-section">
-          <p>hello</p>
+          <div class="vote-container"></div>
         </div>
       </div>
     </>
