@@ -8,8 +8,9 @@ const ProductList = () => {
         {product.map((item) => (
             <div key={item.id} className="product-card">  
                 <img className="product-img" src={item.image}></img>
-                <p>{item.name}</p>
-                <p>{item.price}</p>
+                <p class="product-name">{item.name}</p>
+                <p class="product-price">${item.price}</p>
+                <button class="vote-button">Vote</button>
             </div>
         ))}
         </div>
