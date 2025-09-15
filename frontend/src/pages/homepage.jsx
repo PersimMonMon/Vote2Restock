@@ -3,11 +3,25 @@ import ProductList from "../components/ProductList";
 const HomePage = () => {
   
   // create function to toggle click
-  const handleClick = ({userId}) => {
-    console.log('hi');
+  const handleClick = async (itemId) => {
+    console.log(itemId);
+
+    // ues fetch to call on post api to create vote model (userId, itemId, and userChoice)
+    try {
+      const response = await fetch('/generateVote', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({itemId})
+
+        // check if response (200-299) using .ok 
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    } catch(error) {
+      console.error('Fetch error:', error);
+    }
   };
-
-
 
   // create function to generate userId (store with sessionStorage)
 
