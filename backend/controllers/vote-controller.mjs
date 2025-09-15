@@ -17,7 +17,8 @@ app.listen(PORT, async () => {
 });
 
 app.post('/generateId', asyncHandler (async (req, res) => {
-    const response = await votes.createUser();
+    const {itemId, userChoice} = req.body
+    const response = await votes.createVote(itemId, userChoice);
     res.status(200).json(response);
 }))
 

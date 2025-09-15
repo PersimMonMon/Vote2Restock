@@ -27,9 +27,12 @@ const voteSchema = new mongoose.Schema({
 const Vote = mongoose.model(VOTE_DB_NAME, voteSchema);
 
 // generate a userId 
-async function createUser() {
+async function createVote(itemId, userChoice) {
     const userId = Date.now() + Math.random() * 1000;
-    return userId;
+
+    const output = new Vote ({userId: userId, itemId: itemId, userChoice: userChoice})
+    const saved = await output.save();
+    return saved;
 };
 
 // get the total vote count
