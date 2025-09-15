@@ -2,6 +2,10 @@ import product from '../products/products'
 
 // return items in product in div (must be one div only as React DOM expects one root node per component)
 const ProductList = ({handleClick}) => {
+    
+    // createVote fetch api and make a model for each product 
+
+
     // use key property (react-specific)
     return (
         <div className="product-box">

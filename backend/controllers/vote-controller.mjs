@@ -22,6 +22,11 @@ app.post('/generateVote', asyncHandler (async (req, res) => {
     res.status(200).json(response);
 }))
 
+// default request when access to backend
+app.get('/', (req, res) => {
+  res.send('Welcome to the Vote API server!');
+});
+
 // get request 
 app.get('/votes', asyncHandler (async (req, res) => {
     const { itemId } = req.query
