@@ -4,7 +4,7 @@ import asyncHandler from 'express-async-handler';
 import * as votes from '../models/vote-model.mjs';
 
 //create const for port and express 
-const PORT = express.env.PORT 
+const PORT = process.env.PORT 
 const app = express()  // express takes no parameters, only want one app instance created 
 
 // Parse all incoming data, turn JSON filled items into JSON object 
@@ -16,7 +16,7 @@ app.listen(PORT, async () => {
     console.log(`Server listening on port ${PORT}...`);
 });
 
-app.post('/generateId', asyncHandler (async (req, res) => {
+app.post('/generateVote', asyncHandler (async (req, res) => {
     const {itemId, userChoice} = req.body
     const response = await votes.createVote(itemId, userChoice);
     res.status(200).json(response);

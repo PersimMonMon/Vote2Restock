@@ -7,7 +7,7 @@ let connection = undefined;
 // Connect to MongoDB
 async function connect() {
     try{
-        connection = mongoose.connect(VOTE_DB_NAME, 
+        connection = mongoose.connect(process.env.MONGODB_CONNECT_STRING, 
                 {dbName: VOTE_DB_NAME});
         console.log('Successfully connected to MongoDB using Mongoose!');
     } catch(err) {
@@ -54,3 +54,5 @@ async function toggleVote(userId, itemId) {
     vote.userChoice = vote.userChoice === 1 ? 0 : 1;
     return await vote.save();
 };
+
+export { connect, createVote, getVotes, toggleVote };
