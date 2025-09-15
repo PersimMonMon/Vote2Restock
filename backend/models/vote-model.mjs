@@ -26,7 +26,13 @@ const voteSchema = new mongoose.Schema({
 // Create model to create, read, update, and delete documents 
 const Vote = mongoose.model(VOTE_DB_NAME, voteSchema);
 
-// 
+// generate a userId 
+async function createUser() {
+    const userId = Date.now() + Math.random() * 1000;
+    return userId;
+};
+
+// get the total vote count
 async function getVotes(itemId) {
     const voteCount = await Vote.aggregate([
         { $match: { itemId: itemId}},       // filter to only have itemId

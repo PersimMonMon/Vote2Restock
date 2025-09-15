@@ -16,6 +16,11 @@ app.listen(PORT, async () => {
     console.log(`Server listening on port ${PORT}...`);
 });
 
+app.post('/generateId', asyncHandler (async (req, res) => {
+    const response = await votes.createUser();
+    res.status(200).json(response);
+}))
+
 // get request 
 app.get('/votes', asyncHandler (async (req, res) => {
     const { itemId } = req.query
