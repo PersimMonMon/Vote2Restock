@@ -28,7 +28,7 @@ const Vote = mongoose.model(VOTE_DB_NAME, voteSchema);
 
 // generate a userId 
 async function createVote(itemId, userChoice) {
-    const userId = Date.now() + Math.random() * 1000;
+    
 
     const output = new Vote ({userId: userId, itemId: itemId, userChoice: userChoice})
     const saved = await output.save();

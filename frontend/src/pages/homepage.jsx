@@ -1,6 +1,10 @@
 import ProductList from "../components/ProductList";
+import loadInitialModels from "../components/LoadModels";
 
 const HomePage = () => {
+
+  // create model for each product for new userId
+  loadInitialModels();
   
   // create function to toggle click
   const handleClick = async (itemId) => {
