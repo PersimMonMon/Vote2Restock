@@ -12,10 +12,10 @@ const HomePage = () => {
 
     // ues fetch to call on post api to create vote model (userId, itemId, and userChoice)
     try {
-      const response = await fetch('/generateVote', {
+      const response = await fetch('/toggle', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({userId, itemId, userChoice})
+        body: JSON.stringify({userId, itemId})
 
         // check if response (200-299) using .ok 
       })

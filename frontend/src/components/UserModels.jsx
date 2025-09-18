@@ -1,16 +1,13 @@
 //get the userId and itemId 
 import products from '../products/products.js';
 
-const userChoice = 0;
-let productId;
-
 // createVote fetch api and make a model for each product 
-const loadModel = async(newUserId, itemId, userChoice) => {
+const loadModel = async(userId, itemId) => {
   try { 
     const response = await fetch('/generateVote', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({newUserId, itemId})
+      body: JSON.stringify({userId, itemId})
     })
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -21,7 +18,7 @@ const loadModel = async(newUserId, itemId, userChoice) => {
 };
 
 //loop products and get the itemId, then call get request (use .map instead of forEach as it does not ignore promises)
-export const loadInitialModels = async () => {
+const loadInitialModels = async () => {
 
   //generate userId and store in localStorage
   const userId = JSON.parse(localStorage.getItem('newUserId'));
@@ -35,8 +32,10 @@ export const loadInitialModels = async () => {
 
   // return all promisses to await 
   await Promise.all(products.map((item) => {
-    return loadModel(newUserId, item.id, userChoice)
+    return loadModel(newUserId, item.id)
 }));
   //return userId so we can call on HomePage
   return newUserId; 
 };
+
+export default loadInitialModels;

@@ -7,7 +7,7 @@ let connection = undefined;
 // Connect to MongoDB
 async function connect() {
     try{
-        connection = mongoose.connect(process.env.MONGODB_CONNECT_STRING, 
+        connection = await mongoose.connect(process.env.MONGODB_CONNECT_STRING, 
                 {dbName: VOTE_DB_NAME});
         console.log('Successfully connected to MongoDB using Mongoose!');
     } catch(err) {
@@ -27,8 +27,8 @@ const voteSchema = new mongoose.Schema({
 const Vote = mongoose.model(VOTE_DB_NAME, voteSchema);
 
 // generate a userId 
-async function createVote(itemId, userChoice) {
-    const output = new Vote ({userId: userId, itemId: itemId, userChoice: userChoice})
+async function createVote(userId, itemId) {
+    const output = new Vote ({userId: userId, itemId: itemId})
     const saved = await output.save();
     return saved;
 };
