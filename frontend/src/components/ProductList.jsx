@@ -1,4 +1,5 @@
 import product from '../products/products'
+import VoteButton from './VoteButton';
 
 // return items in product in div (must be one div only as React DOM expects one root node per component)
 const ProductList = ({handleClick}) => {
@@ -11,7 +12,7 @@ const ProductList = ({handleClick}) => {
                 <img className="product-img" src={item.image}></img>
                 <p className="product-name">{item.name}</p>
                 <p className="product-price">${item.price}</p>
-                <button className="vote-button" onClick={() => {handleClick(item.id)}}>Vote</button>
+                <VoteButton handleClick = {handleClick} itemId = {item.id} />
             </div>
         ))}
         </div>

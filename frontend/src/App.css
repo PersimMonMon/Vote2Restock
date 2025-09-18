@@ -44,3 +44,11 @@
   font-size: 18px;
   font-weight: bold;
 }
+
+.vote-button.active {
+  background-color: green;
+}
+
+.vote-button.default {
+  background-color: white;
+}
