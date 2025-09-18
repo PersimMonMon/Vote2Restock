@@ -1,5 +1,5 @@
 import ProductList from "../components/ProductList";
-import loadInitialModels from "../components/LoadModels";
+import loadInitialModels from "../components/UserModels";
 
 const HomePage = () => {
 

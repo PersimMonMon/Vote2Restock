@@ -17,8 +17,8 @@ app.listen(PORT, async () => {
 });
 
 app.post('/generateVote', asyncHandler (async (req, res) => {
-    const {itemId, userChoice} = req.body
-    const response = await votes.createVote(itemId, userChoice);
+    const {userId, itemId, userChoice} = req.body
+    const response = await votes.createVote(userId, itemId, userChoice);
     res.status(200).json(response);
 }))
 
@@ -36,8 +36,8 @@ app.get('/votes', asyncHandler (async (req, res) => {
 
 // put request 
 app.put('/toggle', asyncHandler (async (req, res) => {
-    const { userId, itemId } = req.body;
-    const item = await votes.toggleVote(userId, itemId)
+    const { userId, itemId, userChoice } = req.body;
+    const item = await votes.toggleVote(userId, itemId, userChoice)
     res.status(200).json(item);
 }));
 

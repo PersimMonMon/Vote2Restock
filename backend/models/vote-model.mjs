@@ -28,8 +28,6 @@ const Vote = mongoose.model(VOTE_DB_NAME, voteSchema);
 
 // generate a userId 
 async function createVote(itemId, userChoice) {
-    
-
     const output = new Vote ({userId: userId, itemId: itemId, userChoice: userChoice})
     const saved = await output.save();
     return saved;
@@ -49,8 +47,8 @@ async function getVotes(itemId) {
 };
 
 // toggle the vote (put request)
-async function toggleVote(userId, itemId) {
-    const vote = await Vote.findOne({userId, itemId})
+async function toggleVote(userId, itemId, userChoice) {
+    const vote = await Vote.findOne({userId, itemId, userChoice})
     vote.userChoice = vote.userChoice === 1 ? 0 : 1;
     return await vote.save();
 };
