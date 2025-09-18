@@ -4,7 +4,7 @@ import loadInitialModels from "../components/UserModels";
 const HomePage = () => {
 
   // create model for each product for new userId
-  loadInitialModels();
+  const userId = loadInitialModels();
   
   // create function to toggle click
   const handleClick = async (itemId) => {
@@ -13,9 +13,9 @@ const HomePage = () => {
     // ues fetch to call on post api to create vote model (userId, itemId, and userChoice)
     try {
       const response = await fetch('/generateVote', {
-        method: 'POST',
+        method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({itemId})
+        body: JSON.stringify({userId, itemId, userChoice})
 
         // check if response (200-299) using .ok 
       })

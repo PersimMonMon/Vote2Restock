@@ -10,7 +10,7 @@ const loadModel = async(newUserId, itemId, userChoice) => {
     const response = await fetch('/generateVote', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({newUserId, itemId, userChoice})
+      body: JSON.stringify({newUserId, itemId})
     })
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -27,13 +27,16 @@ export const loadInitialModels = async () => {
   const userId = JSON.parse(localStorage.getItem('newUserId'));
 
   if (userId) {
-    return;
-  }
+    return userId;
+  };
 
   const newUserId = Date.now() + Math.random() * 1000;
   localStorage.setItem('newUserId', JSON.stringify(newUserId));
 
+  // return all promisses to await 
   await Promise.all(products.map((item) => {
     return loadModel(newUserId, item.id, userChoice)
 }));
+  //return userId so we can call on HomePage
+  return newUserId; 
 };

@@ -36,8 +36,8 @@ app.get('/votes', asyncHandler (async (req, res) => {
 
 // put request 
 app.put('/toggle', asyncHandler (async (req, res) => {
-    const { userId, itemId, userChoice } = req.body;
-    const item = await votes.toggleVote(userId, itemId, userChoice)
+    const { userId, itemId} = req.body;
+    const item = await votes.toggleVote(userId, itemId)
     res.status(200).json(item);
 }));
 
