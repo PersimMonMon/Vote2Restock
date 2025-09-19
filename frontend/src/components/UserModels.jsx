@@ -21,21 +21,21 @@ const loadModel = async(userId, itemId) => {
 const loadInitialModels = async () => {
 
   //generate userId and store in localStorage
-  const userId = JSON.parse(localStorage.getItem('newUserId'));
+  let userId = JSON.parse(localStorage.getItem('newUserId'));
 
-  if (userId) {
-    return userId;
+  if (!userId) {
+    userId = Date.now() + Math.random() * 1000;
+    localStorage.setItem('newUserId', JSON.stringify(userId));
+
+    // return all promisses to await 
+    await Promise.all(products.map((item) => {
+    return loadModel(userId, item.id)}));
+    console.log('votes model created');
+  } else {
+    console.log('did not create votes model');
   };
-
-  const newUserId = Date.now() + Math.random() * 1000;
-  localStorage.setItem('newUserId', JSON.stringify(newUserId));
-
-  // return all promisses to await 
-  await Promise.all(products.map((item) => {
-    return loadModel(newUserId, item.id)
-}));
   //return userId so we can call on HomePage
-  return newUserId; 
+  return userId; 
 };
 
 export default loadInitialModels;

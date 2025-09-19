@@ -11,7 +11,7 @@ async function connect() {
                 {dbName: VOTE_DB_NAME});
         console.log('Successfully connected to MongoDB using Mongoose!');
     } catch(err) {
-        console.log(err);
+        console.error(err);
         throw Error(`Could not connect to MongoDB ${err.message}`);
     };
 };

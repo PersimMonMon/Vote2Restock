@@ -12,8 +12,12 @@ app.use(express.json());
 
 // Connect express to PORT and listen to incoming request + connect to MongoDB
 app.listen(PORT, async () => {
-    await votes.connect();
+    try {
+    await votes.connect(); 
     console.log(`Server listening on port ${PORT}...`);
+  } catch(err) {
+    console.error('Failed to connect to MongoDB:', err);
+  }
 });
 
 app.post('/generateVote', asyncHandler (async (req, res) => {
