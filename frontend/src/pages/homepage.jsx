@@ -3,8 +3,18 @@ import loadInitialModels from "../components/UserModels";
 
 const HomePage = () => {
 
-  // create model for each product for new userId
-  const userId = loadInitialModels();
+  // create model for each product for new userId (use useState and useEffect to control async func)
+  const [userId, setId] = useState(null);
+
+  //have useEffect run once 
+  useEffect(() => {
+    const onLoad = async () => {
+      const id = await loadInitialModels();
+      setId(id); 
+    };
+    onLoad(); // change state (update userId)
+  }, [])
+  
   
   // create function to toggle click
   const handleClick = async (itemId) => {
