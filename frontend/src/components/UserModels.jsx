@@ -21,11 +21,11 @@ const loadModel = async(userId, itemId) => {
 const loadInitialModels = async () => {
 
   //generate userId and store in localStorage
-  let userId = JSON.parse(localStorage.getItem('newUserId'));
+  let userId = JSON.parse(localStorage.getItem('userId'));
 
   if (!userId) {
     userId = Date.now() + Math.random() * 1000;
-    localStorage.setItem('newUserId', JSON.stringify(userId));
+    localStorage.setItem('userId', JSON.stringify(userId));
 
     // return all promisses to await 
     await Promise.all(products.map((item) => {
