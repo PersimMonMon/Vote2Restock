@@ -43,6 +43,11 @@ app.get('/', (req, res) => {
 // get request 
 app.get('/votes', asyncHandler (async (req, res) => {
     const { itemId } = req.query
+
+    if (!itemId) {
+      res.status(400).json({Error: "Missing item query parameter"})
+    };
+
     const voteObjects = await votes.getVotes(itemId)
     res.status(200).json(voteObjects);
 }));

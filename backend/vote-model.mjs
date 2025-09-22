@@ -41,15 +41,15 @@ async function checkDup(userId, itemId) {
 
 // get the total vote count
 async function getVotes(itemId) {
-    const voteCount = await Vote.aggregate([
-        { $match: { itemId: itemId}},       // filter to only have itemId
+    const result = await Vote.aggregate([
+        { $match: { itemId: itemId} },       // filter to only have itemId
         { $group: { 
             _id: "$itemId", 
             totalVotes: { $sum: "$userChoice"} 
             } 
         }  
     ]);
-    return voteCount;
+    return result;
 };
 
 // toggle the vote (put request)
