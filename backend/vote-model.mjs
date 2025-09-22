@@ -33,6 +33,12 @@ async function createVote(userId, itemId) {
     return saved;
 };
 
+// check if we already made a model from userId and itemId
+async function checkDup(userId, itemId) {
+    const existence = await Vote.findOne({userId, itemId});
+    return !!existence;
+};
+
 // get the total vote count
 async function getVotes(itemId) {
     const voteCount = await Vote.aggregate([
@@ -53,4 +59,4 @@ async function toggleVote(userId, itemId) {
     return await vote.save();
 };
 
-export { connect, createVote, getVotes, toggleVote };
+export { connect, createVote, getVotes, toggleVote, checkDup };

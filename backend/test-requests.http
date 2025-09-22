@@ -1,0 +1,81 @@
+@NON_EXISTENT_VOTE_ID = 369b336b8c8867f2cc165159
+@USER_ID = testUser123
+@ITEM_ID = product123
+
+### Request 1: Create a vote
+### Response 
+### Status Code: 201
+### Body: JSON object for the newly created vote
+POST http://localhost:3000/generateVote HTTP/1.1
+content-type: application/json
+
+{
+  "userId": "{{USER_ID}}",
+  "itemId": "{{ITEM_ID}}"
+}
+
+### Request 2: Try to create a duplicate vote for the same user + item
+### Response
+### Status Code: 400 (or 409 depending on your backend)
+### Body: {"Error": "User has already voted on this item"}
+POST http://localhost:3000/generateVote HTTP/1.1
+content-type: application/json
+
+{
+  "userId": "{{USER_ID}}",
+  "itemId": "{{ITEM_ID}}"
+}
+
+### Request 3: Invalid request (missing itemId)
+### Response
+### Status Code: 400
+### Body: {"Error": "Invalid request"}
+POST http://localhost:3000/generateVote HTTP/1.1
+content-type: application/json
+
+{
+  "userId": "{{USER_ID}}"
+}
+
+### Request 4: Retrieve all votes
+### Response
+### Status Code: 200
+### Body: JSON array with all votes
+GET http://localhost:3000/votes HTTP/1.1
+
+### Request 5: Retrieve a single vote by ID
+### Replace VOTE_ID with the _id returned in Request 1
+### Response
+### Status Code: 200
+### Body: JSON object with correct properties
+GET http://localhost:3000/votes/{{VOTE_ID}} HTTP/1.1
+
+### Request 6: Retrieve non-existent vote by ID
+### Response
+### Status Code: 404
+### Body: {"Error": "Not found"}
+GET http://localhost:3000/votes/{{NON_EXISTENT_VOTE_ID}} HTTP/1.1
+
+### Request 7: Update a vote (e.g., set userChoice to 1)
+### Response
+### Status Code: 200
+### Body: JSON object with updated vote
+PUT http://localhost:3000/votes/{{VOTE_ID}} HTTP/1.1
+content-type: application/json
+
+{
+  "userId": "{{USER_ID}}",
+  "itemId": "{{ITEM_ID}}",
+  "userChoice": 1
+}
+
+### Request 8: Delete a vote
+### Response
+### Status Code: 204 (empty body)
+DELETE http://localhost:3000/votes/{{VOTE_ID}} HTTP/1.1
+
+### Request 9: Delete non-existent vote
+### Response
+### Status Code: 404
+### Body: {"Error": "Not found"}
+DELETE http://localhost:3000/votes/{{NON_EXISTENT_VOTE_ID}} HTTP/1.1

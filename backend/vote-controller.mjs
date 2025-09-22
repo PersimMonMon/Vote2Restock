@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import asyncHandler from 'express-async-handler';
-import * as votes from '../models/vote-model.mjs';
+import * as votes from './vote-model.mjs';
 
 //create const for port and express 
 const PORT = process.env.PORT 
@@ -22,9 +22,18 @@ app.listen(PORT, async () => {
 
 app.post('/generateVote', asyncHandler (async (req, res) => {
     const {userId, itemId} = req.body
+    const checkDupResult = await votes.checkDup(userId, itemId);
+
+    if (!userId || !itemId) {
+      return res.status(400).json({Error: "Invalid request"});
+    };
+
+    if (checkDupResult) {
+      return res.status(400).json({Error: "User vote exists already"});
+    }
     const response = await votes.createVote(userId, itemId);
-    res.status(200).json(response);
-}))
+    res.status(201).json(response);
+}));
 
 // default request when access to backend
 app.get('/', (req, res) => {
