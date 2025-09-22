@@ -30,9 +30,10 @@ const loadInitialModels = async () => {
     // return all promisses to await 
     await Promise.all(products.map((item) => {
     return loadModel(userId, item.id)}));
-    console.log('votes model created');
+
+    console.log('Votes created for all products');
   } else {
-    console.log('did not create votes model');
+    console.log('UserId exist already: did not create model');
   };
   //return userId so we can call on HomePage
   return userId; 

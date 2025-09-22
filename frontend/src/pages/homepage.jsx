@@ -12,7 +12,7 @@ const HomePage = () => {
     const onLoad = async () => {
       const id = await loadInitialModels();
       setId(id); 
-      console.log('hey models are loading');
+      console.log('Hey, models are fully loaded');
     };
     onLoad(); // change state (update userId)
   }, [])
