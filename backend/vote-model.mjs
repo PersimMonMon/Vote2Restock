@@ -52,6 +52,18 @@ async function getVotes(itemId) {
     return result;
 };
 
+// get userChoice 
+async function getChoice(userId, itemId) {
+    const found = await Vote.findOne({userId, itemId});
+
+    if (!found) {
+        return null;
+    };
+
+    let choice = found.userChoice; 
+    return choice;
+};
+
 // toggle the vote (put request)
 async function toggleVote(userId, itemId) {
     const vote = await Vote.findOne({userId, itemId})
@@ -59,4 +71,4 @@ async function toggleVote(userId, itemId) {
     return await vote.save();
 };
 
-export { connect, createVote, getVotes, toggleVote, checkDup };
+export { connect, createVote, getVotes, toggleVote, checkDup, getChoice };

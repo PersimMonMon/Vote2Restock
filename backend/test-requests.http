@@ -36,3 +36,9 @@ content-type: application/json
 ### Status Code: 200
 ### Body: Single JSON object with totalVotes
 GET http://localhost:3000/votes?itemId={{ITEM_ID}} HTTP/1.1
+
+### Request 5: Retrieve userChoice
+### Response
+### Status Code: 200
+### Body: Single JSON object with userChoice
+GET http://localhost:3000/getChoice?userId={{USER_ID}}&itemId={{ITEM_ID}}

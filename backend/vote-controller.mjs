@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Vote API server!');
 });
 
-// get request 
+// get request forr total votes of an item
 app.get('/votes', asyncHandler (async (req, res) => {
     const { itemId } = req.query
 
@@ -50,6 +50,19 @@ app.get('/votes', asyncHandler (async (req, res) => {
 
     const voteObjects = await votes.getVotes(itemId)
     res.status(200).json(voteObjects);
+}));
+
+// get request for userChoice
+app.get('/getChoice', asyncHandler (async(req, res) => {
+  const { userId, itemId } = req.query;
+  
+  const voteChoice = await votes.getChoice(userId, itemId);
+
+  if (voteChoice === null ) {
+    return res.status(404).json({Error: "Vote not found"});
+  };
+
+  res.status(200).json(voteChoice);
 }));
 
 // put request 

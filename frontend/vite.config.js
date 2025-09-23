@@ -7,7 +7,8 @@ export default defineConfig({
     proxy: {
       '/exercises': 'http://localhost:3000',
       '/generateVote': 'http://localhost:3000',
-      '/votes': 'http://localhost:3000'
+      '/votes': 'http://localhost:3000',
+      '/toggle': 'http://localhost:3000'
     }
   }
 })
