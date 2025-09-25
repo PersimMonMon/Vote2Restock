@@ -54,21 +54,21 @@ app.get('/votes', asyncHandler (async (req, res) => {
 
 // get request for userChoice
 app.get('/getChoice', asyncHandler (async(req, res) => {
-  const { userId, itemId } = req.query;
+  const { userId } = req.query;
   
-  const voteChoice = await votes.getChoice(userId, itemId);
+  const voteChoices = await votes.getChoice(userId);
 
-  if (voteChoice === null ) {
+  if (voteChoices === null ) {
     return res.status(404).json({Error: "Vote not found"});
   };
 
-  res.status(200).json(voteChoice);
+  res.status(200).json(voteChoices);
 }));
 
 // put request 
 app.put('/toggle', asyncHandler (async (req, res) => {
-    const { userId} = req.body;
-    const item = await votes.toggleVote(userId)
+    const { userId, itemId } = req.body;
+    const item = await votes.toggleVote(userId, itemId)
     res.status(200).json(item);
 }));
 

@@ -54,14 +54,13 @@ async function getVotes(itemId) {
 
 // get userChoices
 async function getChoice(userId) {
-    const found = await Vote.findOne({userId});
+    const found = await Vote.find({userId});
 
     if (!found) {
         return null;
     };
 
-    let choice = found.userChoice; 
-    return choice;
+    return found;
 };
 
 // toggle the vote (put request)
