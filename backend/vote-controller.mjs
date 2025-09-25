@@ -68,8 +68,14 @@ app.get('/getChoice', asyncHandler (async(req, res) => {
 // put request 
 app.put('/toggle', asyncHandler (async (req, res) => {
     const { userId, itemId } = req.body;
-    const item = await votes.toggleVote(userId, itemId)
-    res.status(200).json(item);
+
+    try {
+      const item = await votes.toggleVote(userId, itemId);
+      res.status(200).json(item);
+    } catch (error) {
+      res.status(404).json({Error: error.message});
+    };
+    
 }));
 
 

@@ -4,22 +4,71 @@ import React, {useState, useEffect} from "react";
 
 const HomePage = () => {
 
-  // create model for each product for new userId (use useState and useEffect to control async func)
+  // create states for userId and choices
   const [userId, setId] = useState(null);
+  const [choices, setChoices] = useState({});
 
-  //have useEffect run once 
+  // create model for each product for new userId (use useState and useEffect to control async func) | have useEffect run once 
   useEffect(() => {
     const onLoad = async () => {
       const id = await loadInitialModels();
-      setId(id); 
-      console.log('Hey, models are fully loaded');
+      setId(id); // no matter what, userId will exist
+      console.log(id);
+      console.log(`Hey, models are fully loaded. The userId = ${userId}`);
     };
     onLoad(); // change state (update userId)
   }, [])
-  
+
+  useEffect(() => {
+  console.log("userId changed:", userId);
+}, [userId]);
+
+  // use useEffect, get userId from storage and update vote button 
+  useEffect(() => {
+    if (!userId) return;  
+    const localId = JSON.parse(localStorage.getItem('userId'));
+
+    // get array of userChoices 
+    const fetchChoices = async () => {
+    try {
+      const response = await fetch(`/getChoice?userId=${localId}`, {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+      });
+
+      if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+      };
+
+      // update object with userChoices
+      const data = await response.json();
+      const choiceMap = {};
+      data.forEach((object) => {
+        choiceMap[object.itemId] = object.userChoice
+      });
+
+      //save state of array containg user's choices
+      setChoices(choiceMap);
+            
+    } catch(error) {
+      console.error('Fetch error', error);
+      };
+    };
+    
+    fetchChoices();
+  }, [userId]);
+ 
+  useEffect(() => {
+  console.log('choices updated:', choices);
+}, [choices]);
+
   
   // create function to toggle click
   const handleClick = async (itemId) => {
+    if (!userId) {
+      console.log('No userId yet!');
+      return;
+    }
     console.log(itemId);
 
     // ues fetch to call on post api to create vote model (userId, itemId, and userChoice)
@@ -45,7 +94,7 @@ const HomePage = () => {
         <div className="container">
         <div className="main-section">
           <div className="products-container">
-            <ProductList handleClick={handleClick}/>
+            <ProductList handleClick={handleClick} choices={choices}/>
           </div>
         </div>
         <div className="side-section">

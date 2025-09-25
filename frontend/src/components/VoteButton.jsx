@@ -1,15 +1,16 @@
-import {useState} from "react"; 
+import {useState, useEffect} from "react"; 
 
-function VoteButton({handleClick, itemId}) {
+function VoteButton({handleClick, itemId, choices}) {
   // use useState to toggle between 'Voted' and 'Vote'
-  const [voted, setVote] = useState(false);
+  const [voted, setVote] = useState(choices === 1);
+
+  useEffect(() => {
+    setVote(choices === 1);
+  }, [choices]);
 
   const onClick = () => {
-
-    // change voted state 
+    // change voted state and toggle userChoice
     setVote(!voted); 
-
-    // change userChoice to toggle 
     handleClick(itemId);
   }
   
