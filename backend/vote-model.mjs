@@ -52,9 +52,9 @@ async function getVotes(itemId) {
     return result;
 };
 
-// get userChoice 
-async function getChoice(userId, itemId) {
-    const found = await Vote.findOne({userId, itemId});
+// get userChoices
+async function getChoice(userId) {
+    const found = await Vote.findOne({userId});
 
     if (!found) {
         return null;
