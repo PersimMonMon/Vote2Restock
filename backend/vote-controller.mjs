@@ -40,15 +40,9 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Vote API server!');
 });
 
-// get request forr total votes of an item
+// get request for total votes of an item
 app.get('/votes', asyncHandler (async (req, res) => {
-    const { itemId } = req.query
-
-    if (!itemId) {
-      res.status(400).json({Error: "Missing item query parameter"})
-    };
-
-    const voteObjects = await votes.getVotes(itemId)
+    const voteObjects = await votes.getVotes()
     res.status(200).json(voteObjects);
 }));
 

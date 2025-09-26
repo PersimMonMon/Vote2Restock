@@ -4,9 +4,10 @@ import React, {useState, useEffect} from "react";
 
 const HomePage = () => {
 
-  // create states for userId and choices
+  // create states for userId, userchoices, and totalVotes
   const [userId, setId] = useState(null);
   const [choices, setChoices] = useState({});
+  const [total, setTotal] = useState({});
 
   // create model for each product for new userId (use useState and useEffect to control async func) | have useEffect run once 
   useEffect(() => {
@@ -19,11 +20,7 @@ const HomePage = () => {
     onLoad(); // change state (update userId)
   }, [])
 
-  useEffect(() => {
-  console.log("userId changed:", userId);
-}, [userId]);
-
-  // use useEffect, get userId from storage and update vote button 
+  // use useEffect, get userChoice from storage and update vote button 
   useEffect(() => {
     if (!userId) return;  
     const localId = JSON.parse(localStorage.getItem('userId'));
@@ -49,7 +46,7 @@ const HomePage = () => {
 
       //save state of array containg user's choices
       setChoices(choiceMap);
-            
+
     } catch(error) {
       console.error('Fetch error', error);
       };
@@ -57,11 +54,33 @@ const HomePage = () => {
     
     fetchChoices();
   }, [userId]);
- 
-  useEffect(() => {
-  console.log('choices updated:', choices);
-}, [choices]);
 
+  // fetch totalVotes and pass to ProductList
+  const fetchTotal = async() => {
+    let tempArray = {};
+    try {
+        const response = await fetch('/votes', {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.error}`);
+        }
+
+        const totalVotes = await response.json();
+        totalVotes.forEach((object) => {
+          tempArray[object._id] = object.totalVotes;
+        });
+        setTotal(tempArray);
+    } catch(error) {
+        console.error('Fetch error', error);
+    }
+  };
+
+  // fetch votes on mount 
+  useEffect(() => {
+    fetchTotal();
+  }, []);
   
   // create function to toggle click
   const handleClick = async (itemId) => {
@@ -83,6 +102,7 @@ const HomePage = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
         }
+      fetchTotal();
     } catch(error) {
       console.error('Fetch error:', error);
     }
@@ -94,7 +114,7 @@ const HomePage = () => {
         <div className="container">
         <div className="main-section">
           <div className="products-container">
-            <ProductList handleClick={handleClick} choices={choices}/>
+            <ProductList handleClick={handleClick} choices={choices} total={total} fetchTotal={fetchTotal}/>
           </div>
         </div>
         <div className="side-section">
