@@ -1,19 +1,19 @@
 # Vote2Restock | Furniture Voting App 
-A full-stack web application that allows users to vote on furniture items, with votes on each furniture card. Built using React with Vite, Node.js, Express, and MongoDB (Mongoose), this app demonstrates presistent user interactions, REST APIs, and dynamic frontend state management. 
+A **full-stack web application** that allows users to **vote on furniture items**, with votes **persisting across sessions**. Built using **React with Vite, Node.js, Express, and MongoDB (Mongoose)**, this app demonstrates **presistent user interactions, REST APIs, and dynamic frontend state management**. 
 
 # Features
-  - Users can vote for furniture items, with votes stored persistently in MongoDB.
-  - Users can toggle their vote (cast or remove) at any time.
+  - Users can **vote for furniture items**, with votes **stored persistently** in MongoDB.
+  - Users can **toggle their vote** (cast or remove) at any time.
   - Displays a total votes per item and user-specific voting history.
   - Dynamically updates vote counts without page reloads.
-  - Generates unique user IDs automatically for new sessions.
+  - Generates **unique user IDs** automatically for new sessions.
 
 # Technologies
-  - Frontend: React, Vite, HTML, CSS, JavaScript
-  - Backend: Node.js, Express REST APIs
-  - Database: MongoDB with Mongoose
-  - State Management: React Hooks (useState, useEffect)
-  - Other: express-async-handler
+  - **Frontend:** React, Vite, HTML, CSS, JavaScript
+  - **Backend:** Node.js, Express REST APIs
+  - **Database**: MongoDB with Mongoose
+  - **State Management:** React Hooks (useState, useEffect)
+  - **Other:** express-async-handler
 
 # Sample Product Data (product.js) 
 ``` 
@@ -34,20 +34,20 @@ export default products;
 ```
 
 # Backend Setup 
-1. Clone the repository and install dependencies:
+1. **Clone the repository** and install dependencies:
 ```
 git clone <repo-url>
 cd <repo-directory>
 npm install
 ```
 
-2. Set environment variables in a .end file:
+2. **Set environment variables** in a .end file:
 ```
 PORT=<choose_port>
 MONGODB_CONNECT_STRING=<your_mongodb_connection_string>
 ```
 
-3. Start the backend server:
+3. **Start the backend server:**
 ```
 node server.js 
 ```
@@ -65,13 +65,13 @@ node server.js
 # Frontend Overview 
   - HomePage renders all products using just the ProjectList.jsx file
   - Each item has a VoteButton showing "Vote" or "Voted" based on user's choice.
-  - User ID generation: 
+  - **User ID generation:** 
     - A unique userId is automatically created for new users and stored in localStorage.
     - Votes are tied to this ID for persistence across page reloads.
-  - State Management:
+  - **State Management:**
     - choices tracks with items the user has voted for.
     - total tracks total votes for each item.
-  - Vote handling:
+  - **Vote handling:**
     - Clicking a button calls the backend PUT /toggle endpoint, updates choices and total votes.
 
 # Running the App
